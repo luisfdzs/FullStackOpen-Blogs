@@ -2,6 +2,7 @@ const express = require('express')
 const cors = require('cors')
 const mongoose = require('mongoose')
 const blogsRouter = require('./controllers/Blogs')
+const {notFound, handleError} = require('./utils/middleware')
 const {MONGO_DB_URI, MONGO_DB_URI_TEST, NODE_ENV} = require('./utils/config')
 const {info, error, requestLogger} = require('./utils/logger')
 
@@ -19,6 +20,7 @@ app.use(cors())
 app.use(express.json())
 app.use(requestLogger)
 app.use('/api/blogs', blogsRouter)
-
+app.use(notFound)
+app.use(handleError)
 
 module.exports = app
